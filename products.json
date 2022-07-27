@@ -1,0 +1,25 @@
+{
+    "items": [
+        {
+            "id": 1,
+            "name": "Apple Pie",
+            "price": 999
+        },
+        {
+            "id": 2,
+            "name": "Pumpkin Pie",
+            "price": 799
+        },
+        {
+            "id": 3,
+            "name": "Cherry Pie",
+            "price": 1451
+        },
+        {
+            "id": 4,
+            "name": "Blueberry Pie",
+            "price": 1299
+        }
+    ]
+
+}
