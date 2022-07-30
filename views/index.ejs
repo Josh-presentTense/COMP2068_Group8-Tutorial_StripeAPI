@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link href="stylesheets/style.css" rel="stylesheet" />
-    <script src="https://checkout.stripe.com/checkout.js" defer></script>
+    <script src="https://js.stripe.com/v3/" defer></script>
     <script>
         var stripePublicKey = '<%= stripePublicKey %>'
     </script>
@@ -19,15 +19,20 @@
 
     <main class="container">
 
-        <h1 class="mt-2 text-warning" style="text-shadow: 2px 2px 2px black;">Welcome to Marketplace!</h1>
+        <h1 class="mt-1 text-warning" style="text-shadow: 2px 2px 2px black;">Welcome to Marketplace!</h1>
 
         <form class="d-print-block gap-2 p-2 rounded-3" method="#">
             <% products.items.forEach((product) => { %>
-                <div class="mb-3 label-row text-white p-2 product-row" data-item-id="<%= product.id %>">
-                    <label for="item1" class="form-label fw-bold pe-3"><%= product.name %></label>
-                    <span class="product-price">$<%= product.price / 100 %></span>
-                    <input type="number" value="0" min="0" max="5" class="product-quantity" onclick="getTotal()" />
+                <div class="mb-3 label-row text-white p-2 product-row d-flex justify-content-between rounded-3" data-item-id="<%= product.id %>">
+                    <div class="pt-3 ps-2">
+                        <label for="item1" class="form-label fw-bold pe-2"><%= product.name %></label>
+                        <span class="pe-5 product-price">$<%= product.price / 100 %></span>
+                        <input type="number" value="0" min="0" max="5" class="product-quantity ps-2" onclick="getTotal()" />
+                    </div>
 
+                    <div class="pe-5">
+                        <img src="/images/ApplePie.jpg" class="img-thumbnail" alt="" width="150" height="150" />
+                    </div>
                 </div>
             <% }) %>
 
@@ -75,9 +80,23 @@
 
                     </div>
                     <div class="col-2 d-flex align-items-center text-center">
-                        <button class="btn btn-primary rounded-2" onclick="purchaseSubmit()">Purchase</button>
+                        <button class="btn btn-primary btn-outline-info text-white border border-0 rounded-2" onclick="purchaseSubmit()">Purchase</button>
 
                         <script>
+
+var productSections = document.getElementsByClassName('product-row')
+var jsonArr = []
+
+for (var i = 0; i < productSections.length; i++) {
+    var productSelected = productSections[i]
+    var productQuantity = productSelected.getElementsByClassName('product-quantity')[0]
+    var quantity = productQuantity.value
+
+    if (quantity > 0) {
+        jsonArr[i] = push({ price: "hello", quantity: quantity})
+    }
+}
+console.log(jsonArr)
 
                             var stripeHandler = StripeCheckout.configure({
                                 key: stripePublicKey,
